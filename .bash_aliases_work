@@ -1,0 +1,234 @@
+#! /usr/bin/bash
+
+# Database Connections
+# Original code KPK
+
+# Dev Databases
+#
+# Use: dbd <database_name> -r (MASTER|REPLICA)
+#
+# Code is wrapping in setting TERM to fix issue with psql in tmux
+# psql does not liking using screen-256color for TERM
+dbd () {
+    temp_term=$TERM
+    export TERM=screen
+    if [ $1 ]; then
+        rtk_database_login.pl -dxs $*
+    else
+        rtk_database_login.pl -dxs linear_national -r MASTER
+    fi
+    export TERM=$temp_term
+}
+
+# Dev Databases
+alias charterdev="dbd charter -r MASTER"
+alias natdev="dbd linear_national -r MASTER"
+alias echodev="dbd echostar -r MASTER"
+alias attdev="dbd att_dev -r MASTER"
+alias mapdev="dbd mapserver -r MASTER"
+
+## Live Databases *** WIP
+#dbl () {
+#    temp_term=$TERM
+#    export TERM=screen
+#
+#    if [ $1 ]; then
+#        rtk_database_login.pl -dxs $*
+#    elif [ $2 ]; then
+#        psql -h $1 -d $2 -U jwhiteneck
+#    else
+#        psql -h linlivenationaldb2 -d linear_national_live -U jwhiteneck
+#    fi
+##        case $1 in
+##            linear_national)     dbnl;;
+##            charter)             dbcl;;
+##            linear_charter)      dblcl;;
+##            echostar)            dbel;;
+##            linear_schedule)     dbsl;;
+##            linear_tv)           dbal;;
+##            att)                 dbal;;
+##            linear_comcast)      dbcoml;;
+##            linear_midcontinent) dbmcl;;
+##            telefonica)          dbtl;;
+##            linear_mcv)          dbml;;
+##            replica)             dbnlr;;
+##            replica_a)           dbnlra;;
+##            replica_b)           dbnlrb;;
+##            *)                   dbnl;;
+##        esac
+#    export TERM=$temp_term
+#}
+#alias dbnl='psql -h linlivenationaldb2 -d linear_national_live -U jwhiteneck'
+#alias dbnlr='psql -h linlivenationalreportdb1 -d linear_national_live_reporting_replica -U jwhiteneck'
+#alias dbnlra='psql -h linlivenationalwebdb1 -d linear_national_live_webdb1_replica -U jwhiteneck'
+#alias dbnlrb='psql -h linlivenationalwebdb2 -d linear_national_live_webdb2_replica -U jwhiteneck'
+#alias dbel='psql -h linliveechodb2 -d echostar_live -U jwhiteneck'
+#alias dbsl='psql -h linlivescheddb1 -d linear_schedule_live -U jwhiteneck'
+#alias dbal='psql -h linliveattdb2 -d att_live -U jwhiteneck'
+#alias dbmcl='psql -h linliveattdb2 -d linear_midcontinent_live -U jwhiteneck'
+#alias dblcl='psql -h linlivecharterdb1 -d linear_charter_live -U jwhiteneck'
+#alias dbcl='psql -h linlivecharterdb1 -d charter_live -U jwhiteneck'
+#alias dbcoml='psql -h linliveattdb2 -d linear_comcast_live -U jwhiteneck'
+#alias dbtl='psql -h linliveattdb2 -d linear_telefonica_live -U jwhiteneck'
+#alias dbml='psql -h linliveattdb2 -d linear_mcv_live -U jwhiteneck'
+
+#END KPK DATABASE
+# Live Databases
+alias charterlive="psql -h linlivecharterdb1 -U jwhiteneck charter_live"
+alias natlive="psql -h linlivenationaldb2 -U jwhiteneck linear_national_live"
+alias echolive='psql -h linliveechodb2 -U jwhiteneck -d echostar_live'
+alias maplive="psql -h mapserverlivedb1 -U jwhiteneck mapserver_live"
+
+# Private databases
+alias natmb="psql -h lindevprivatedb1 -p 5436 linear_national_live_medibrands -U linear_national"
+alias natmb2="psql -h lindevprivatedb1 -p 5438 linear_national_isglin732 -U linear_national"
+alias natcd="psql -h lindevprivatedb1 -p 5435 linear_national_isglin755 -U linear_national"
+
+# Servers
+alias lindev1="ssh -A jwhiteneck@lindev1"
+alias lindev2="ssh -A jwhiteneck@lindev2"
+alias lindev3="ssh -A jwhiteneck@lindev3"
+alias edev6="ssh -A jwhiteneck@edev6"
+alias edev7="ssh -A jwhiteneck@edev7"
+alias mapserver="ssh -A jwhiteneck@mapserverliveweb1"
+alias linsanmaster1="ssh -A jwhiteneck@linsanmaster1"
+alias linsanmaster2="ssh -A jwhiteneck@linsanmaster2"
+alias linearworker="ssh -A linear_worker@linsanmaster1"
+
+alias tl2='tmux attach-session -dt lindev2'
+alias tirc='tmux attach-session -dt irc'
+
+alias vir='vim perl_lib/RTK/Linear/Pages/Routes.pm'
+alias nt=newtree
+alias rit="rtk_incr_test.pl -b master"
+alias log='tail -f /usr/local/apache-dev/logs/edev1/error_log | grep `rentask_current_ticket_no.pl`'
+alias fulllog='tail -f /usr/local/apache-dev/logs/edev1/error_log'
+
+alias spiders='git-spider && git-spider-webtest2 && git-spider-webtest4'
+alias tspiders='tail -f spider_results.txt -f spider_results_webtest2.txt -f spider_results4.txt'
+alias override='cat linear-commit-message.txt && echo "\n" && ack -A1 override'
+alias rds="cd ~/work && rtk_dir_status.pl"
+
+alias work="work-on-this"
+alias jsync=rsync_config_files
+alias jtest=test_bash_arrays
+
+alias misc="rentask_clock.pl in 183949"
+alias dev="rentask_clock.pl in 178792"
+alias devcap="rentask_clock.pl in 178207"
+alias hire="rentask_clock.pl in 183715"
+alias train="rentask_clock.pl in 178206"
+alias out="rentask_clock.pl out"
+alias cele="rentask_clock.pl in 188159"
+alias tableau="rentask_clock.pl in 188796"
+
+alias gearman_myreports="echo -E RTK_SUBSYSTEM=linear SUBSYSTEM_PATH=\$ PWD web_src/linear/services/gearman_my_reports/run \&"
+
+alias gearman_email="echo -E SUBSYSTEM_PATH=$PWD web_src/linear/services/gearman_emailing/run \&"
+alias gearman_component="echo -E SUBSYSTEM_PATH=$PWD web_src/linear/services/gearman_component_building/run \&"
+alias gearman_myreports_live="echo -E SUBSYSTEM_PATH=$PWD USE_LIVE_DB=1 DATABASE_XML=/storage/home/jwhiteneck/Live_Database.xml web_src/linear/services/gearman_my_reports/run \&"
+
+alias gdol='git diff origin/linear'
+alias gdor='git diff origin/release'
+alias gruol='git remote update origin/linear'
+alias glrl='git log -p --reverse origin/linear..'
+
+newtree () {
+    NUM_CHARS=`echo $1|wc -m`
+    if [ $NUM_CHARS -gt 40 ]; then
+        echo "That name is too long!"
+    else
+        if [ ! -d $1 ]; then
+            export TICKET=`echo $1|sed 's/[^0-9]//g'`
+            cd ~/work
+            git clone git@rtkgit.rtkinternal:linear.git $1
+            cd $1
+            git submodule init
+            git submodule update
+            git checkout -b $1
+            cd ext/shared
+            git checkout -b $1
+            cd ../..
+            make
+        else
+            cdt $1
+        fi
+    fi
+}
+
+
+cdt () {
+    if [ $1 ]; then
+        FRAG=$1
+    else
+        TICKET=`rentask_current_ticket_no.pl`
+        DIR=`find ~/work/ -type d -maxdepth 1 -name \*$TICKET`
+        cd $DIR
+        return
+    fi
+    DIR=`find ~/work/ -type d -maxdepth 1 -name \*$FRAG\*`
+    if [ -d $DIR ]; then
+        cd $DIR
+    else
+        echo No Checkout for ticket $1
+    fi
+}
+
+delete_trees_for_closed_tickets () {
+    ORIG_DIR=`pwd`
+    for DIR in $HOME/work/*[0-9]; do
+        TICKET=`echo $DIR|sed 's/[^0-9]//g'`
+        if [ -n "`rentask_info $TICKET|grep 'status: closed'`" ]; then
+            rm -rf $DIR;
+        fi
+    done
+    cd $ORIG_DIR
+}
+
+function ticket_no_color
+{
+    TICKET_NO=`rentask_current_ticket_no.pl`;
+    if [ `echo $PWD|grep "$TICKET_NO"` ]; then
+        echo 32
+    else
+        echo 31
+    fi
+}
+
+function rsync_config_files () {
+    files[0]=".ackrc"
+    files[1]=".bashrc"
+    files[2]=".bash_aliases"
+    files[3]=".bash_ps1"
+    files[4]=".git_config"
+    files[5]=".git_ignore"
+    files[6]=".rtpass"
+    files[7]=".tmux.conf"
+    files[8]=".vimrc"
+    for i in "${files[@]}"
+    do
+        rsync -ave ssh --delete $i           lindev1:$i
+        rsync -ave ssh --delete $i           lindev2:$i
+        rsync -ave ssh --delete $i           lindev3:$i
+        rsync -ave ssh --delete $i             edev6:$i
+        rsync -ave ssh --delete $i             edev7:$i
+        rsync -ave ssh --delete $i     linsanmaster1:$i
+        rsync -ave ssh --delete $i mapserverliveweb1:$i
+    done
+}
+
+function test_bash_arrays () {
+    files[0]="~/.ackrc"
+    files[1]="~/.bashrc"
+    files[2]="~/.bash_aliases"
+    files[3]="~/.bash_ps1"
+    files[4]="~/.git_config"
+    files[5]="~/.git_ignore"
+    files[6]="~/.rtpass"
+    files[7]="~/.tmux.conf"
+    files[8]="~/.vimrc"
+    for i in "${files[@]}"
+    do
+        echo $i
+    done
+}

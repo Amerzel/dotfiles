@@ -1,0 +1,31 @@
+[user]
+    name = "James Whiteneck"
+    email = james.whiteneck@rentrak.com
+[diff]
+    color = auto
+[pager]
+    color = true
+[status]
+    color = auto
+    submodulesummary = true
+[rerere]
+    enabled = true
+[alias]
+    graph = log --graph --decorate
+    stat = status -s
+    co = checkout
+[core]
+    excludesfile = /home/jwhiteneck/.gitignore
+    pager = less -r
+[color "diff"]
+    commit = blue normal bold
+[alias]
+    # colored log output
+    lg = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%an%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
+
+    # Unstage previous commit
+    goddammit = !git reset --soft HEAD^
+[http]
+    sslCAinfo = /home/jwhiteneck/.certifications/cacert.pem
+[push]
+	default = current

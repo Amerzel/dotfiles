@@ -1,0 +1,11 @@
+.cvswork-env
+TAGS
+.*.swp
+*#
+.#*
+linear-commit-message.txt
+linear-ticket-no.txt
+spider_results.txt
+spider_results4.txt
+spider_results_webtest2.txt
+test_worker_emails.log

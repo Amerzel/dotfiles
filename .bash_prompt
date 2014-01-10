@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+#
+# Sexier bash prompt by Amerzel
+# https://github.com/Amerzel/sexy-bash-prompt
+# Forked from https://github.com/twolfson/sexy-bash-prompt
+
+# If we are on a colored terminal
+if tput setaf 1 &> /dev/null; then
+  # Reset the shell from our `if` check
+  tput sgr0 &> /dev/null
+
+  # If you would like to customize your colors, use
+  # # Attribution: http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
+  # for i in $(seq 0 $(tput colors)); do
+  #   echo " $(tput setaf $i)Text$(tput sgr0) $(tput bold)$(tput setaf $i)Text$(tput sgr0) $(tput sgr 0 1)$(tput setaf $i)Text$(tput sgr0)  \$(tput setaf $i)"
+  # done
+
+  # If the terminal supports at least 256 colors, write out our 256 color based set
+  if [[ $(tput colors) -ge 256 ]] &> /dev/null; then
+    ROOT_USER_COLOR=$(tput setaf 196)   # RED
+    USER_COLOR=$(tput setaf 33)         # BLUE
+    PREPOSITION_COLOR=$(tput setaf 244) # GREY
+    DEVICE_COLOR=$(tput setaf 39)       # CYAN
+    DIR_COLOR=$(tput setaf 250)         # LIGHTER GREY
+    GIT_STATUS_COLOR=$(tput setaf 202)  # ORANGE
+    PROMPT_COLOR=$(tput setaf 250)      # LIGHTER GREY
+    FILL_COLOR=$(tput setaf 244)        # LIGHTER GREY
+  else
+  # Otherwise, use colors from our set of 8
+    ROOT_USER_COLOR=$(tput setaf 1)    # RED
+    USER_COLOR=$(tput setaf 4)         # BLUE
+    PREPOSITION_COLOR=$(tput setaf 7)  # WHITE
+    DEVICE_COLOR=$(tput setaf 4)       # BLUE
+    DIR_COLOR=$(tput setaf 7)          # WHITE
+    GIT_STATUS_COLOR=$(tput setaf 1)   # RED
+    PROMPT_COLOR=$(tput setaf 7)       # WHITE
+    FILL_COLOR=$(tput setaf 7)         # WHITE
+  fi
+
+  # Save common color actions
+  BOLD=$(tput bold)
+  RESET=$(tput sgr0)
+else
+# Otherwise, use ANSI escape sequences for coloring
+  # If you would like to customize your colors, use
+  # DEV: 30-39 lines up 0-9 from `tput`
+  # for i in $(seq 0 109); do
+  #   echo -n -e "\033[1;${i}mText$(tput sgr0) "
+  #   echo "\033[1;${i}m"
+  # done
+  ROOT_USER_COLOR="\033[1;31m"   # RED
+  USER_COLOR="\033[1;34m"        # BLUE
+  PREPOSITION_COLOR="\033[1;90m" # GREY
+  DEVICE_COLOR="\033[1;36m"      # CYAN
+  DIR_COLOR="\033[1;90m"         # GREEN
+  GIT_STATUS_COLOR="\033[1;31m"  # RED
+  PROMPT_COLOR="\033[1;90m"      # GREY
+  FILL_COLOR="\033[1;90m"        # GREY
+  BOLD=""
+  RESET="\033[m"
+fi
+
+function get_git_branch() {
+  # On branches, this will return the branch name
+  # On non-branches, (no branch)
+  REF="$(git symbolic-ref HEAD 2> /dev/null | sed -e 's/refs\/heads\///')"
+  if [[ $REF != "" ]]; then
+    echo $REF
+  else
+    echo "(no branch)"
+  fi
+}
+
+function is_on_git() {
+  git rev-parse 2> /dev/null
+}
+
+get_git_info () {
+  # Grab the branch
+  BRANCH="$(get_git_branch)"
+
+  # If there are any branches
+  if [[ $BRANCH != "" ]]; then
+    # Echo the branch
+    OUTPUT=$BRANCH
+
+    # Echo our output
+    echo $OUTPUT
+  fi
+}
+
+# Symbol displayed at the line of every prompt
+function get_prompt_symbol() {
+  # If we are root, display `#`. Otherwise, `$`
+  if [[ $UID == 0 ]]; then
+    echo "#"
+  else
+    echo "\$"
+  fi
+}
+
+# Dynamic USER_COLOR
+function get_user_color() {
+  # If we are root, display ROOT_USER_COLOR. Otherwise, USER_COLOR
+  if [[ $UID == 0 ]]; then
+    echo $ROOT_USER_COLOR
+  else
+    echo $USER_COLOR
+  fi
+}
+
+function prompt_command() {
+    # create a $fill of all screen width minus the time string and a space:
+    let FILLSIZE=${COLUMNS}-9
+    FILL=""
+    while [ "$FILLSIZE" -gt "0" ]
+    do
+        FILL="-${FILL}" # fill with dashes to work on
+        let FILLSIZE=${FILLSIZE}-1
+    done
+
+    # Define the sexier-bash-prompt
+    export PS1="\[$FILL_COLOR\]$FILL \t\n\
+\[$(get_user_color)\]\u\
+\[$PREPOSITION_COLOR\]@\
+\[$DEVICE_COLOR\]\h \
+\[$PREPOSITION_COLOR\]\
+\[$DIR_COLOR\]\w\
+\[$PREPOSITION_COLOR\]\
+\$( is_on_git && \
+  echo -n \"${BOLD} \" && \
+  echo -n \"\[$GIT_STATUS_COLOR\]\$(get_git_info)\" && \
+  echo -n \"\[$PROMPT_COLOR\]\")\n\
+$(get_prompt_symbol) \[$RESET\]"
+
+}
+
+PROMPT_COMMAND=prompt_command

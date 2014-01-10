@@ -1,0 +1,9 @@
+\set AUTOCOMMIT off
+\set ON_ERROR_ROLLBACK on
+\set HISTSIZE 4000
+\set HISTFILE ~/.psql_history/ :HOST - :DBNAME
+\timing
+\set PROMPT1 '%[%`( sleep 0.1; kill -WINCH $PPID ) & (ps ho "%a" $PPID | grep -q _live) && echo -e "\\e[0;41m"`%]%/%R%#%[%033[m%] '
+\pset pager off
+\pset null 'NULL'
+\encoding unicode
