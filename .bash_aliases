@@ -8,7 +8,6 @@ alias tls='tmux list-sessions'
 alias xit='exit'
 
 alias gs='git status'
-#alias gu='git remote update && git rebase origin/master && git submodule update'
 alias gu='git-update-tree'
 alias gsu='git submodule update'
 alias gco='git checkout'
@@ -18,7 +17,8 @@ alias vgdomno='vim $(git diff origin/master --name-only)'
 alias gruom='git remote update origin/master'
 alias gl='git log'
 alias glno='git log --name-only'
-alias glr="git log --word-diff-regex='[[:alnum:]]+|[^[:space:]]' --color-words -p -w --reverse -M origin/master.."
+alias glr="git log -p --reverse origin/master.."
+alias glrw="git log --word-diff-regex='[[:alnum:]]+|[^[:space:]]' --color-words -p -w --reverse -M origin/master.."
 alias gf=git_fetch
 
 alias        ..='cd ..'
