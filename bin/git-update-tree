@@ -1,0 +1,106 @@
+#!/bin/sh
+#
+# git update-tree
+#
+#
+# This script manages the updating of your git tree, including any
+# submodules it finds automatically. The basic operation (applied to
+# both the main repo and the submodules) is a stash of uncommitted
+# local changes, a remote fetch and rebase followed by an stash pop.
+#
+#
+# This script includes handling for setting upstream on your branches
+# in the main repo, and could be easily extended to do so in the
+# submodules. This is useful for the case where you've done
+#
+#     git branch --set-upstream origin/topic-branch my-cool-feature
+#
+# to connect your branch to an upstream integration branch. The script
+# will rebase on that integration branch insted of the default
+# origin/master
+#
+# submodules get some special handling. In particular, ext/shared is
+# rebased against origin/linear since that is in effect our version of
+# origin/master. Also the script will just do a git submodule update
+# if the submodule is not on a branch.
+#
+
+color_enabled() {
+    test -x /usr/bin/tput
+}
+
+branch="$(git symbolic-ref HEAD 2>/dev/null)"
+branch=${branch##refs/heads/}
+
+do_git_stash () {
+    echo -e "\033[00mTrying to stash local changes\033[0m"
+    git stash | grep -v "No local changes to save" > /dev/null
+    do_pop=$?
+}
+
+BASE_DIR=$( git rev-parse --show-toplevel )
+BASE_DIR=${BASE_DIR%%/ext/*}
+
+pushd $BASE_DIR > /dev/null
+
+upstream=$( git for-each-ref --format='%(upstream:short)' refs/heads/$branch)
+
+if [ -z "$upstream" ]; then
+    upstream=origin/master
+fi
+
+echo -e "\033[33mupdating $branch\033[0m"
+echo -e "\033[33m============================================\033[0m"
+
+do_git_stash
+
+git remote update && git rebase $upstream
+
+if [ $do_pop -eq 0 ]; then
+    echo -e "\033[33mPerforming Pop of stashed changes\033[0m"
+    git stash pop
+else
+    echo -e "\033[33mNo stashed changes to pop\033[0m"
+fi
+
+
+for SUBMODULE_DIR in $(git submodule | awk '{print $2}'); do
+    echo -e "\033[33mchecking submodule $SUBMODULE_DIR\033[0m"
+
+    pushd $SUBMODULE_DIR > /dev/null
+
+    sharedbranch="$(git symbolic-ref HEAD 2>/dev/null)"
+    sharedbranch=${sharedbranch##refs/heads/}
+
+    if [ "$sharedbranch" ]; then
+        echo -e "\033[33m Updating $SUBMODULE_DIR branch $sharedbranch\033[0m"
+        echo -e "\033[33m============================================\033[0m"
+        do_git_stash
+        git remote update
+        if [ $SUBMODULE_DIR == 'ext/shared' ]; then
+            git rebase origin/linear
+        else
+            git rebase origin/master
+        fi
+        if [ $do_pop -eq 0 ]; then
+            echo -e "\033[33mPerforming Pop of stashed changes\033[0m"
+            git stash pop
+        else
+            echo -e "\033[33mNo stashed changes to pop\033[0m"
+        fi
+    else
+        echo -e "\033[33mperforming submodule update, since $SUBMODULE_DIR is on no branch\033[0m"
+        echo -e "\033[33m============================================\033[0m"
+        if [ $SUBMODULE_DIR == 'ext/shared' ]; then
+            git reset --hard origin/linear
+        else
+            git reset --hard origin/master
+        fi
+
+        pushd $BASE_DIR > /dev/null
+        git submodule update --init
+        popd > /dev/null
+    fi
+    printf "\n\n"
+    popd  > /dev/null
+done
