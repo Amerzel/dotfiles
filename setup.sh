@@ -80,7 +80,7 @@ check_shell () {
 install_dotfiles () {
     info 'Installing dotfiles'
 
-    files=$(find "$DOTFILES_ROOT" -mindepth 1 -maxdepth 2 -print | grep -v ".git/" | grep -v ".git$" | grep -v ".DS_Store" | grep -v "setup.sh" | grep -v "README.md")
+    files=$(find "$DOTFILES_ROOT" -mindepth 1 -maxdepth 1 -print | grep -v ".git/" | grep -v ".git$" | grep -v ".DS_Store" | grep -v "setup.sh" | grep -v "README.md")
 
     overwrite_all=false
     backup_all=false
