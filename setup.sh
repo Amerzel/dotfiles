@@ -149,19 +149,12 @@ install_dotfiles () {
 
     done
 
-    restart_shell
+    info "All done. Restart your shell and enjoy!"
 }
 
 framework_check () {
     install_dotfiles
 }
-
-
-restart_shell () {
-    exec "$(which $SHELL)"  -l
-    info "enjoy!"
-}
-
 
 if [[ "$1" != '' ]]; then
     case "$1" in
