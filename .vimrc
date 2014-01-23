@@ -67,7 +67,7 @@
     set nobk                        " Get rid of the annoying backup files
     set nofoldenable                " Don't auto fold
     set nocompatible                " Use Vim settings rather than vi settings
-    set paste                       " Enable paste formatting by default
+"    set paste                       " Enable paste formatting by default
     set pastetoggle=<F11>           " Paste toggling on keeps automatic indentation when pasting
     set ruler                       " Show the cursor position all the time
     set showcmd                     " Display incomplete commands
@@ -138,6 +138,8 @@
     if filereadable('/usr/local/etc/vimrc_files/reasonably_stable_mappings.vim')
         source /usr/local/etc/vimrc_files/reasonably_stable_mappings.vim
     endif
+
+    map ,x :!transpose.pl \| !table-ize.pl<cr>
 
 " ==============================================================================
 " Unite
