@@ -109,9 +109,7 @@ alias tspiders='tail -f spider_results.txt -f spider_results_webtest2.txt -f spi
 alias override='cat linear-commit-message.txt && echo "\n" && ack -A1 override'
 alias rds="cd ~/work && rtk_dir_status.pl"
 
-alias work="work-on-this"
-alias jsync=rsync_config_files
-alias jtest=test_bash_arrays
+alias tmxw="tmx work"
 
 alias misc="rentask_clock.pl in 183949"
 alias dev="rentask_clock.pl in 178792"
@@ -174,61 +172,3 @@ cdt () {
     fi
 }
 
-delete_trees_for_closed_tickets () {
-    ORIG_DIR=`pwd`
-    for DIR in $HOME/work/*[0-9]; do
-        TICKET=`echo $DIR|sed 's/[^0-9]//g'`
-        if [ -n "`rentask_info $TICKET|grep 'status: closed'`" ]; then
-            rm -rf $DIR;
-        fi
-    done
-    cd $ORIG_DIR
-}
-
-function ticket_no_color
-{
-    TICKET_NO=`rentask_current_ticket_no.pl`;
-    if [ `echo $PWD|grep "$TICKET_NO"` ]; then
-        echo 32
-    else
-        echo 31
-    fi
-}
-
-function rsync_config_files () {
-    files[0]=".ackrc"
-    files[1]=".bashrc"
-    files[2]=".bash_aliases"
-    files[3]=".bash_ps1"
-    files[4]=".git_config"
-    files[5]=".git_ignore"
-    files[6]=".rtpass"
-    files[7]=".tmux.conf"
-    files[8]=".vimrc"
-    for i in "${files[@]}"
-    do
-        rsync -ave ssh --delete $i           lindev1:$i
-        rsync -ave ssh --delete $i           lindev2:$i
-        rsync -ave ssh --delete $i           lindev3:$i
-        rsync -ave ssh --delete $i             edev6:$i
-        rsync -ave ssh --delete $i             edev7:$i
-        rsync -ave ssh --delete $i     linsanmaster1:$i
-        rsync -ave ssh --delete $i mapserverliveweb1:$i
-    done
-}
-
-function test_bash_arrays () {
-    files[0]="~/.ackrc"
-    files[1]="~/.bashrc"
-    files[2]="~/.bash_aliases"
-    files[3]="~/.bash_ps1"
-    files[4]="~/.git_config"
-    files[5]="~/.git_ignore"
-    files[6]="~/.rtpass"
-    files[7]="~/.tmux.conf"
-    files[8]="~/.vimrc"
-    for i in "${files[@]}"
-    do
-        echo $i
-    done
-}
