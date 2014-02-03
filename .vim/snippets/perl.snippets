@@ -4,3 +4,18 @@ snippet dump
 	warn Dumper(
 		${0}
 	);
+
+# PopularityIndex Dumper
+snippet dumppi
+	use Data::Dumper;
+	warn Dumper(
+		station_no => $station_no,
+		tag_no => $tag_no,
+		den_tag_no => $den_tag_no,
+		num_hours => $num_hours,
+		num_hhs => $tag_reporting_num_hhs->{$tag_no},
+		den_num_hours => get_hash($num_denominator_hours, [$den_tag_no, @key_values]),
+		den_num_hhs => $tag_reporting_num_hhs->{$den_tag_no},
+		popularity_index => $popularity_index,
+		should_use_division_values => $should_use_division_values,
+	);
