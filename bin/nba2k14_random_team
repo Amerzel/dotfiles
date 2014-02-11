@@ -1,0 +1,142 @@
+#!/usr/bin/perl
+
+use Getopt::Long;
+use List::Util qw/shuffle sum/;
+
+my $all, $euro, $classic, $nba;
+
+GetOptions(
+    "all|a"     => \$all,
+    "stars|s"   => \$stars,
+    "euro|e"    => \$euro,
+    "classic|c" => \$classic,
+    "nba|n"     => \$nba,
+    "diff|d=s"  => \$diff,
+);
+
+$euro = $classic = $nba = $stars = 1 if($all);
+unless($all || $euro || $classic || $nba || $stars) {
+    $nba = 1;
+}
+
+my %nba_teams = (
+    'Boston Celtics'         => sum(90, 80, 79, 75, 74)/5,
+    'Brooklyn Nets'          => sum(88, 84, 83, 82, 81)/5,
+    'New York Knicks'        => sum(91, 83, 82, 81, 78)/5,
+    'Philadelphia 76ers'     => sum(80, 79, 77, 70, 66)/5,
+    'Toronto Raptors'        => sum(87, 82, 77, 74, 72)/5,
+    'Golden State Warriors'  => sum(87, 87, 82, 78, 76)/5,
+    'Los Angeles Clippers'   => sum(93, 84, 80, 79, 75)/5,
+    'Los Angeles Lakers'     => sum(93, 80, 80, 75, 72)/5,
+    'Phoenix Suns'           => sum(81, 80, 78, 75, 70)/5,
+    'Sacramento Kings'       => sum(81, 75, 75, 74, 73)/5,
+    'Chicago Bulls'          => sum(82, 77, 75, 74, 74)/5,
+    'Cleveland Cavaliers'    => sum(89, 86, 79, 77, 76)/5,
+    'Detroit Pistons'        => sum(86, 82, 81, 81, 78)/5,
+    'Indiana Pacers'         => sum(87, 80, 80, 80, 79)/5,
+    'Milwaukee Bucks'        => sum(81, 80, 78, 73, 73)/5,
+    'Dallas Mavericks'       => sum(83, 82, 79, 78, 76)/5,
+    'Houston Rockets'        => sum(90, 88, 76, 76, 75)/5,
+    'Memphis Grizzlies'      => sum(83, 83, 82, 75, 74)/5,
+    'New Orleans Pelicans'   => sum(88, 83, 82, 79, 73)/5,
+    'San Antonio Spurs'      => sum(87, 86, 85, 83, 73)/5,
+    'Atlanta Hawks'          => sum(81, 80, 79, 77, 75)/5,
+    'Charlotte Bobcats'      => sum(84, 77, 76, 74, 74)/5,
+    'Miami Heat'             => sum(99, 91, 81, 79, 75)/5,
+    'Orlando Magic'          => sum(76, 76, 75, 75, 74)/5,
+    'Washington Wizards'     => sum(85, 79, 78, 77, 76)/5,
+    'Denver Nuggets'         => sum(85, 80, 80, 80, 76)/5,
+    'Minnesota Timberwolves' => sum(87, 81, 79, 78, 74)/5,
+    'Oklahoma City Thunder'  => sum(94, 91, 84, 71, 70)/5,
+    'Portland Trail Blazers' => sum(85, 84, 78, 78, 76)/5,
+    'Utah Jazz'              => sum(77, 76, 72, 72, 71)/5,
+);
+
+my %all_star_teams = (
+    'West All Stars' => 92,
+    'East All Stars' => 94,
+);
+
+my %classic_teams = (
+    '64-65 Celtics'       => 85,
+    '64-65 Lakers'        => 77,
+    '70-71 Bucks'         => 72,
+    '70-71 Lakers'        => 78,
+    '70-71 Hawks'         => 70,
+    '71-72 Lakers'        => 78,
+    '71-72 Knicks'        => 80,
+    '76-77 76ers'         => 79,
+    '84-85 76ers'         => 76,
+    '84-85 Bucks'         => 75,
+    '85-86 Bulls'         => 73,
+    '85-86 Celtics'       => 81,
+    '85-86 Hawks'         => 72,
+    '86-87 Lakers'        => 79,
+    '88-89 Pistons'       => 79,
+    '88-89 Bulls'         => 76,
+    '89-90 Cavaliers'     => 75,
+    '90-91 Bulls'         => 80,
+    '90-91 Lakers'        => 78,
+    '90-91 Trail Blazers' => 79,
+    '90-91 Warriors'      => 78,
+    '92-93 Bulls'         => 82,
+    '92-93 Hornets'       => 73,
+    '93-94 Rockets'       => 78,
+    '93-94 Nuggets'       => 77,
+    '94-95 Knicks'        => 80,
+    '94-95 Magic'         => 73,
+    '95-96 Bulls'         => 84,
+    '95-96 Super Sonics'  => 79,
+    '97-98 Bulls'         => 83,
+    '97-98 Jazz'          => 73,
+    '97-98 Lakers'        => 75,
+    '97-98 Spurs'         => 73,
+    '00-01 76ers'         => 72,
+);
+
+my %euro_teams = (
+    'Greece - Olympiacos Piraeus'        => 72,
+    'Greece - Panathinaikos Athens'      => 69,
+    'Spain - Real Madrid'                => 79,
+    'Spain - FC Barcelona'               => 74,
+    'Spain - Unicaja Málaga'             => 73,
+    'Spain - Laboral Kutxa Vitoria'      => 69,
+    'Italy - EA7 Emporio Armani Milano'  => 68,
+    'Italy - Montepaschi Siena'          => 67,
+    'Turkey - Fenerbahçe Ülker Istanbul' => 70,
+    'Turkey - Anadolu Efes Istanbul'     => 73,
+    'Russia - CSKA Moscow'               => 70,
+    'Israel - Maccabi Electra Tel Aviv'  => 70,
+    'Lithuania - Zalgiris Kaunas'        => 67,
+    'Germany - Alba Berlin'              => 65,
+);
+
+my %teams;
+%teams = (%teams, %nba_teams) if($nba);
+%teams = (%teams, %classic_teams) if($classic);
+%teams = (%teams, %euro_teams) if($euro);
+%teams = (%teams, %all_star_teams) if($stars);
+
+@team_names = shuffle(keys %teams);
+
+my $team1 = pop(@team_names);
+my $team1_rating = $teams{$team1};
+delete($teams{$team1});
+
+if(defined($diff)) {
+    map {
+        delete($teams{$_}) if(abs($team1_rating - $teams{$_}) > $diff);
+    } keys %teams;
+}
+
+if(scalar(keys(%teams))) {
+    my $team2 = shuffle(keys %teams);
+    my $team2_rating = $teams{$team2};
+
+    print "\n\n"
+        . "Matchup:\n"
+        . "\tTeam 1: $team1 ($team1_rating)\n"
+        . "\tTeam 2: $team2 ($team2_rating)\n\n";
+} else {
+    print "oops\n";
+}
