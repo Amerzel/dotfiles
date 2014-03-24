@@ -1,1 +1,4 @@
 --type-set=mason=.mason
+--ignore-dir=node_modules
+--ignore-dir=bower_components
+--ignore-dir=fonts
