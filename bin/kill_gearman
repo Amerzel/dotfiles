@@ -1,0 +1,11 @@
+#!/bin/bash
+
+for P in $(ps ux | grep [R]TK::Linear::Gearman::Worker | awk '{print $2}')
+do
+    if [ -d /proc/$P ]; then
+        if [[ $(ls -ld /proc/$P/cwd | awk '{print $11}' | xargs basename) ==  $(ls -ld $PWD | awk '{print $9}' | xargs basename) ]]; then
+            echo "Killing $P"
+            kill $P
+        fi
+    fi
+done

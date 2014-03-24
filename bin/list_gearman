@@ -1,0 +1,26 @@
+#!/bin/bash
+
+trees=()
+
+for P in $(ps ux | grep [R]TK::Linear::Gearman::Worker | awk '{print $2}')
+do
+    if [ -d /proc/$P ]; then
+        tree=`ls -ld /proc/$P/cwd | awk '{print $11}' | xargs basename`
+        already_exists="no"
+        for t in "${trees[@]}"
+        do
+            if [ "$t" = "$tree" ]; then
+                already_exists="yes"
+            fi
+        done
+
+        if [ "$already_exists" = "no" ]; then
+            trees=("${trees[@]}" $tree)
+        fi
+    fi
+done
+
+for t in "${trees[@]}"
+do
+    echo $t
+done
