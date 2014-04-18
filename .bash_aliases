@@ -7,7 +7,7 @@ alias directorysize='du -h --max-depth=1 | sort -h'
 alias tls='tmux list-sessions'
 alias xit='exit'
 
-alias gs='git status'
+alias gs='git status --untracked-files=all'
 alias gu='git-update-tree'
 alias gsu='git submodule update'
 alias gco='git checkout'
