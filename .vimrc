@@ -7,13 +7,29 @@
     set nocompatible                " Use Vim settings rather than Vi settings
 
 " ==============================================================================
-" Pathogen
+" Vundle
 " ==============================================================================
-    runtime bundle/vim-pathogen/autoload/pathogen.vim
-    if exists("g:loaded_pathogen")
-        execute pathogen#infect()
-        execute pathogen#helptags()
-    endif
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" GitHub plugins:
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'kien/ctrlp.vim'
+Plugin 'itchyny/lightline.vim'
+Plugin 'mrtazz/simplenote.vim'
+Plugin 'tomtom/tlib_vim'
+Plugin 'Shougo/unite.vim'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 " ==============================================================================
 " General
@@ -132,15 +148,15 @@
         call cursor(l,c)
     endfun
 
-" ==============================================================================
-" Rentrak
-" ==============================================================================
-    if filereadable('/usr/local/etc/vimrc_files/reasonably_stable_mappings.vim')
-        source /usr/local/etc/vimrc_files/reasonably_stable_mappings.vim
-    endif
-
-    map ,x :!transpose.pl \| !table-ize.pl<cr>
-
+"" ==============================================================================
+"" Rentrak
+"" ==============================================================================
+"    if filereadable('/usr/local/etc/vimrc_files/reasonably_stable_mappings.vim')
+"        source /usr/local/etc/vimrc_files/reasonably_stable_mappings.vim
+"    endif
+"
+"    map ,x :!transpose.pl \| !table-ize.pl<cr>
+"
 " ==============================================================================
 " Unite
 " ==============================================================================
