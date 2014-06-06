@@ -148,15 +148,15 @@ filetype plugin indent on    " required
         call cursor(l,c)
     endfun
 
-"" ==============================================================================
-"" Rentrak
-"" ==============================================================================
-"    if filereadable('/usr/local/etc/vimrc_files/reasonably_stable_mappings.vim')
-"        source /usr/local/etc/vimrc_files/reasonably_stable_mappings.vim
-"    endif
-"
-"    map ,x :!transpose.pl \| !table-ize.pl<cr>
-"
+" ==============================================================================
+" Rentrak
+" ==============================================================================
+    if filereadable('/usr/local/etc/vimrc_files/reasonably_stable_mappings.vim')
+        source /usr/local/etc/vimrc_files/reasonably_stable_mappings.vim
+    endif
+
+    map ,x :!transpose.pl \| !table-ize.pl<cr>
+
 " ==============================================================================
 " Unite
 " ==============================================================================
