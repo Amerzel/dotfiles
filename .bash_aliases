@@ -18,6 +18,8 @@ alias gruom='git remote update origin/master'
 alias gl='git log'
 alias glno='git log --name-only'
 alias glp='git log --pretty=oneline --abbrev-commit --reverse origin..'
+alias glpno='git log --pretty=oneline --abbrev-commit --reverse origin.. --name-only'
+alias glpl='git log --pretty=oneline --abbrev-commit --reverse origin/linear..'
 alias glr="git log -p --reverse origin/master.."
 alias glrw="git log --word-diff-regex='[[:alnum:]]+|[^[:space:]]' --color-words -p -w --reverse -M origin/master.."
 alias gf=git_fetch

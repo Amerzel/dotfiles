@@ -75,7 +75,7 @@ alias mapdev="dbd mapserver -r MASTER"
 #END KPK DATABASE
 # Live Databases
 alias charterlive="psql -h linlivecharterdb1 -U jwhiteneck charter_live"
-alias natlive="psql -h linlivenationaldb2 -U jwhiteneck linear_national_live"
+alias natlive="psql -h linlivenationaldb3 -U jwhiteneck linear_national_live"
 alias echolive='psql -h linliveechodb2 -U jwhiteneck -d echostar_live'
 alias maplive="psql -h mapserverlivedb1 -U jwhiteneck mapserver_live"
 alias natlivereplica='psql -h linlivenationalreportdb1 -d linear_national_live_reporting_replica -U jwhiteneck'

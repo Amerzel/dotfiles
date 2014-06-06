@@ -3,7 +3,7 @@
     email = james.whiteneck@rentrak.com
 [diff]
     color = auto
-	noprefix = true
+    noprefix = true
 [pager]
     color = true
 [status]
