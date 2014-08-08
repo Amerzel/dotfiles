@@ -25,7 +25,7 @@
     lg = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%an%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
 
     # Unstage previous commit
-    goddammit = !git reset --soft HEAD^
+    undo = !git reset HEAD^
 [http]
     sslCAinfo = /home/jwhiteneck/.certifications/cacert.pem
 [push]
