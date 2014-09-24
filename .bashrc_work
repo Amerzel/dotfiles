@@ -4,7 +4,7 @@
 
 #export PATH=~/local/bin:~/bin:~/work/clean/web_src/linear/scripts:~/work/clean/ext/shared/misc_src/utils:$PATH
 #export PATH=~/local/bin:~/bin:~/work/clean/web_src/linear/scripts:$PATH
-export PATH=.:~/local/bin:~/bin:~/work/clean/web_src/linear/scripts:$PATH
+export PATH=.:~/local/bin:~/bin:~/work/clean/web_src/linear/scripts:~/work/dev-tools/util_scripts:$PATH
 #export PERL5LIB=./perl_lib:~/perl_lib
 export SERVER_PORT=8080
 export CVS_RSH=ssh

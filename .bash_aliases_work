@@ -107,7 +107,7 @@ alias vir='vim perl_lib/RTK/Linear/Pages/Routes.pm'
 alias nt=newtree
 alias rit="rtk_incr_test.pl -b master"
 alias log='tail -f /usr/local/apache-dev/logs/edev1/error_log | grep `rentask_current_ticket_no.pl`'
-alias fulllog='tail -f /usr/local/apache-dev/logs/edev1/error_log'
+alias fulllog='tail -f /var/log/httpd/lindev12.vw.rentrak.com-error_log'
 
 alias spiders='git-spider && git-spider-webtest2 && git-spider-webtest4'
 alias tspiders='tail -f spider_results.txt -f spider_results_webtest2.txt -f spider_results4.txt'
