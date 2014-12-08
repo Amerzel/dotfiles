@@ -126,12 +126,28 @@ alias out="rentask_clock.pl out"
 alias cele="rentask_clock.pl in 188159"
 alias tableau="rentask_clock.pl in 188796"
 
+# Gearman
+
 alias gearman_myreports="echo -E RTK_SUBSYSTEM=linear SUBSYSTEM_PATH=\$ PWD web_src/linear/services/gearman_my_reports/run \&"
 
 alias gearman_email="echo -E SUBSYSTEM_PATH=$PWD web_src/linear/services/gearman_emailing/run \&"
 alias gearman_component="echo -E SUBSYSTEM_PATH=$PWD web_src/linear/services/gearman_component_building/run \&"
 alias gearman_myreports_live="echo -E SUBSYSTEM_PATH=$PWD USE_LIVE_DB=1 DATABASE_XML=/storage/home/jwhiteneck/Live_Database.xml web_src/linear/services/gearman_my_reports/run \&"
 alias gearman_status="runlive linear_gearman_admin.pl -m list --no-aggregate"
+
+start_gear() {
+    SUBSYSTEM_PATH=$PWD rundev ./web_src/linear/services/gearman_$*/run -t &> gearman-$*-`date +%Y-%m-%d-%H%M`.log&
+}
+
+alias g_restart='     kill_gearman && rm -f gearman*.log && g_my_reports && sleep 3 &&  tail -f gearman*.log'
+alias g_my_reports='  start_gear my_reports'
+alias g_cluster='     start_gear cluster_running'
+alias g_component='   start_gear component_building'
+alias g_email='       start_gear emailing'
+alias g_media_brands='start_gear media_brands_reports'
+alias g_my_csv='      start_gear my_reports_csv'
+alias g_rentpost='    start_gear rentpost'
+
 
 alias gdol='git diff origin/linear'
 alias gdor='git diff origin/release'
