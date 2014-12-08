@@ -23,10 +23,12 @@ if [ -f ~/.bash_aliases_work ]; then
     . ~/.bash_aliases_work
 fi
 
-if [ -f ~/.bash_prompt ]; then
+if [ -f ~/.bash_prompt_simple ]; then
+    . ~/.bash_prompt_simple
+elif [ -f ~/.bash_prompt ]; then
     . ~/.bash_prompt
-#elif [ -f ~/.bash_ps1 ]; then
-#    . ~/.bash_ps1
+elif [ -f ~/.bash_ps1 ]; then
+    . ~/.bash_ps1
 fi
 
 export EDITOR=vim
