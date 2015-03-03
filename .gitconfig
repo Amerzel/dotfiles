@@ -30,3 +30,5 @@
     sslCAinfo = /home/jwhiteneck/.certifications/cacert.pem
 [push]
 	default = current
+[help]
+    autocorrect = 30
