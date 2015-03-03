@@ -13,7 +13,7 @@ dbd () {
     temp_term=$TERM
     export TERM=screen
     if [ $1 ]; then
-        rtk_database_login.pl -dxs $*
+        rtk_database_login.pl -x $*
     else
         rtk_database_login.pl -dxs linear_national -r MASTER
     fi
@@ -21,11 +21,12 @@ dbd () {
 }
 
 # Dev Databases
-alias charterdev="dbd charter -r MASTER"
-alias natdev="dbd linear_national -r MASTER"
-alias echodev="dbd echostar -r MASTER"
-alias attdev="dbd att_dev -r MASTER"
-alias mapdev="dbd mapserver -r MASTER"
+alias charterdev="dbd charter"
+alias natdev="dbd linear_national_dev"
+alias echodev="dbd echostar_dev"
+alias attdev="dbd att_dev"
+alias mapdev="dbd mapserver"
+alias dtvdev="dbd linear_directv_dev"
 
 ## Live Databases *** WIP
 #dbl () {
@@ -107,7 +108,8 @@ alias vir='vim perl_lib/RTK/Linear/Pages/Routes.pm'
 alias nt=newtree
 alias rit="rtk_incr_test.pl -b master"
 alias log='tail -f /usr/local/apache-dev/logs/edev1/error_log | grep `rentask_current_ticket_no.pl`'
-alias fulllog='tail -f /var/log/httpd/lindev12.vw.rentrak.com-error_log'
+alias fulllog="unbuffer tail -f /var/log/httpd/lindev12.vw.rentrak.com-error_log | grep jwhiteneck | sed -u -e 's/\,\ .*//g'"
+
 
 alias spiders='git-spider && git-spider-webtest2 && git-spider-webtest4'
 alias tspiders='tail -f spider_results.txt -f spider_results_webtest2.txt -f spider_results4.txt'
@@ -136,7 +138,8 @@ alias gearman_myreports_live="echo -E SUBSYSTEM_PATH=$PWD USE_LIVE_DB=1 DATABASE
 alias gearman_status="runlive linear_gearman_admin.pl -m list --no-aggregate"
 
 start_gear() {
-    SUBSYSTEM_PATH=$PWD rundev ./web_src/linear/services/gearman_$*/run -t &> gearman-$*-`date +%Y-%m-%d-%H%M`.log&
+    #SUBSYSTEM_PATH=$PWD rundev ./web_src/linear/services/gearman_$*/run -t &> gearman-$*-`date +%Y-%m-%d-%H%M`.log&
+    SUBSYSTEM_PATH=$PWD rundev ./web_src/linear/services/gearman_$*/run -t &> gearman-$*.log&
 }
 
 alias g_restart='     kill_gearman && rm -f gearman*.log && g_my_reports && sleep 3 &&  tail -f gearman*.log'
@@ -162,7 +165,7 @@ newtree () {
         if [ ! -d $1 ]; then
             export TICKET=`echo $1|sed 's/[^0-9]//g'`
             cd ~/work
-            git clone git@rtkgit.rtkinternal:linear.git $1
+            git clone git@bitbucket.org:Rentrak/linear.git $1
             cd $1
             git submodule init
             git submodule update

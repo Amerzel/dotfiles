@@ -1,28 +1,66 @@
 #!/usr/bin/env bash
 
+# I don't know why but setting any kind of (colored?) PS1 seems to screw up tmux
+
+# tests
+#export PS1="\[\e[00;34m\]\u\[\e[0m\]\[\e[00;37m\]@\[\e[0m\]\[\e[00;36m\]\h\[\e[0m\]\[\e[00;37m\] \w \n\\$ \[\e[0m\]"
+#export PS1='[$LOGNAME@$HOSTNAME $PWD]\n$ '
+#export PS1='\[\e[1;34m\][\u@\h \W]\n\$\[\e[0m\] '
+
+## Colors
+#ESC_SEQ="\x1b["
+#COL_RESET=$ESC_SEQ"39;49;00m"
+#COL_RED=$ESC_SEQ"31;01m"
+#COL_GREEN=$ESC_SEQ"32;01m"
+#COL_YELLOW=$ESC_SEQ"33;01m"
+#COL_BLUE=$ESC_SEQ"34;01m"
+#COL_MAGENTA=$ESC_SEQ"35;01m"
+#COL_CYAN=$ESC_SEQ"36;01m"
+#
+## echo -e "$COL_RED This is red $COL_RESET"
+#
+#export PS1="$COL_BLUE\u@\h \w\n\$ $COL_RESET"
+
 function get_git_branch() {
-    if [ -d .git ]; then
-        # On branches, this will return the branch name
-        # On non-branches, (no branch)
-        REF="$(git symbolic-ref HEAD 2> /dev/null | sed -e 's/refs\/heads\///')"
-
-        if [[ $REF != "" ]]; then
-            echo "$REF"
-        else
-            echo "(no branch)"
-        fi
-    fi
+  # On branches, this will return the branch name
+  # On non-branches, (no branch)
+  REF="$(git symbolic-ref HEAD 2> /dev/null | sed -e 's/refs\/heads\///')"
+  if [[ $REF != "" ]]; then
+    echo $REF
+  else
+    echo "(no branch)"
+  fi
 }
 
-function color_my_prompt {
-    local __newline="\n"
-    local __user_and_host="\[\033[01;34m\]\u@\h"
-    local __cur_location="\[\033[01;90m\]\w"
-    local __git_branch_color="\[\033[31m\]"
-    local __git_branch="$(get_git_branch)"
-    local __prompt_tail="\[\033[35m\]$"
-    local __last_color="\[\033[00m\]"
-    export PS1="$__user_and_host $__cur_location $__git_branch_color$__git_branch$__newline$__prompt_tail$__last_color "
+function is_on_git() {
+  git rev-parse 2> /dev/null
 }
 
-PROMPT_COMMAND=color_my_prompt
+get_git_info () {
+  # Grab the branch
+  BRANCH="$(get_git_branch)"
+
+  # If there are any branches
+  if [[ $BRANCH != "" ]]; then
+    # Echo the branch
+    OUTPUT=$BRANCH
+
+    # Echo our output
+    echo $OUTPUT
+  fi
+}
+
+function prompt_command() {
+    # create a $fill of all screen width minus the time string and a space:
+    let FILLSIZE=${COLUMNS}-9
+    FILL=""
+    while [ "$FILLSIZE" -gt "0" ]
+    do
+        FILL="-${FILL}" # fill with dashes to work on
+        let FILLSIZE=${FILLSIZE}-1
+    done
+
+    export PS1="$FILL \t\n\h@\u \w $(is_on_git && get_git_info)\n\$ "
+}
+
+PROMPT_COMMAND=prompt_command
