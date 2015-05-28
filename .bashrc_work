@@ -27,5 +27,5 @@ export color_tests_output_color_for_warnings='red'
 export color_tests_output_color_for_failed='bold red'
 
 export MISC_TICKET=183949
-export HISTSIZE=9999
-export HISTFILESIZE=999999
+export HISTSIZE=
+export HISTFILESIZE=

@@ -76,7 +76,8 @@ alias dtvdev="dbd linear_directv_dev"
 #END KPK DATABASE
 # Live Databases
 alias charterlive="psql -h linlivecharterdb1 -U jwhiteneck charter_live"
-alias natlive="psql -h linlivenationaldb3 -U jwhiteneck linear_national_live"
+#alias natlive="psql -h linlivenationaldb3 -U jwhiteneck linear_national_live"
+alias natlive="dbd linear_national_live"
 alias echolive='psql -h linliveechodb2 -U jwhiteneck -d echostar_live'
 alias maplive="psql -h mapserverlivedb1 -U jwhiteneck mapserver_live"
 alias natlivereplica='psql -h linlivenationalreportdb1 -d linear_national_live_reporting_replica -U jwhiteneck'
@@ -107,8 +108,8 @@ alias tirc='tmux attach-session -dt irc'
 alias vir='vim perl_lib/RTK/Linear/Pages/Routes.pm'
 alias nt=newtree
 alias rit="rtk_incr_test.pl -b master"
-alias log='tail -f /usr/local/apache-dev/logs/edev1/error_log | grep `rentask_current_ticket_no.pl`'
-alias fulllog="unbuffer tail -f /var/log/httpd/lindev12.vw.rentrak.com-error_log | grep jwhiteneck | sed -u -e 's/\,\ .*//g'"
+alias fulllog="tail -f /var/log/httpd/$HOSTNAME-error_log"
+alias jfulllog="unbuffer tail -f /var/log/httpd/$HOSTNAME-error_log | grep jwhiteneck | sed -u -e 's/\,\ .*//g'"
 
 
 alias spiders='git-spider && git-spider-webtest2 && git-spider-webtest4'
@@ -137,9 +138,17 @@ alias gearman_component="echo -E SUBSYSTEM_PATH=$PWD web_src/linear/services/gea
 alias gearman_myreports_live="echo -E SUBSYSTEM_PATH=$PWD USE_LIVE_DB=1 DATABASE_XML=/storage/home/jwhiteneck/Live_Database.xml web_src/linear/services/gearman_my_reports/run \&"
 alias gearman_status="runlive linear_gearman_admin.pl -m list --no-aggregate"
 
+#start_gear() {
+#    SUBSYSTEM_PATH=$PWD rundev ./web_src/linear/services/gearman_$*/run -t &> gearman-$*.log&
+#}
+
+current_abs_path() {
+    echo $PWD |perl -ne 's,^.+/,,; print'
+}
+
 start_gear() {
-    #SUBSYSTEM_PATH=$PWD rundev ./web_src/linear/services/gearman_$*/run -t &> gearman-$*-`date +%Y-%m-%d-%H%M`.log&
-    SUBSYSTEM_PATH=$PWD rundev ./web_src/linear/services/gearman_$*/run -t &> gearman-$*.log&
+    echo DIR is $(current_abs_path)
+    SUBSYSTEM_PATH=/home/jwhiteneck/work/$(current_abs_path) rundev ./web_src/linear/services/gearman_$*/run -t &> gearman-$*.log&
 }
 
 alias g_restart='     kill_gearman && rm -f gearman*.log && g_my_reports && sleep 3 &&  tail -f gearman*.log'

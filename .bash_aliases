@@ -2,30 +2,36 @@
 
 alias la='ls -alh --color=tty'
 alias ls='ls -alh --color=tty'
+alias less='less -iRS'
 alias ack5=acksearch
+
 alias directorysize='du -h --max-depth=1 | sort -h'
 alias tls='tmux list-sessions'
 alias xit='exit'
 
+# Git related aliases
 alias gs='git status --untracked-files=all'
 alias gu='git-update-tree'
 alias gsu='git submodule update'
 alias gco='git checkout'
 alias gdom='git diff origin/master'
 alias gdomno='git diff origin/master --name-only'
-alias vgdom='vim $(git diff origin/master --name-only)'
-alias vgd='vim $(git diff --name-only)'
-alias gruom='git remote update origin/master'
+alias gdoi='git diff origin/integration'
+alias gdoino='git diff origin/integration --name-only'
 alias gl='git log'
 alias glno='git log --name-only'
-alias glp='git log --pretty=oneline --abbrev-commit --reverse origin..'
-alias glpno='git log --pretty=oneline --abbrev-commit --reverse origin.. --name-only'
+alias glp='git log --pretty=oneline --abbrev-commit --reverse origin/integration..'
+alias glpno='git log --pretty=oneline --abbrev-commit --reverse origin/integration.. --name-only'
 alias glpl='git log --pretty=oneline --abbrev-commit --reverse origin/linear..'
-alias glr="git log -p --reverse origin/master.."
-alias glrw="git log --word-diff-regex='[[:alnum:]]+|[^[:space:]]' --color-words -p -w --reverse -M origin/master.."
+alias glr="git log -p --reverse origin/integration.."
+alias glrw="git log --word-diff-regex='[[:alnum:]]+|[^[:space:]]' --color-words -p -w --reverse -M origin/integration.."
 alias gf=git_fetch
-#alias grp='git request-pull origin/master `hostname`:`pwd`'
 alias grp=git_request_pull
+
+# Vim - Git related aliases
+alias vgdom='vim $(git diff origin/master --name-only)'
+alias vgdoi='vim $(git diff origin/integration --name-only)'
+alias vgd='vim $(git diff --name-only)'
 
 alias        ..='cd ..'
 alias       ...='cd ../..'
@@ -53,14 +59,14 @@ function parse_git_branch
 git_fetch () {
     git fetch $1
     git checkout FETCH_HEAD
-    git rebase origin/master
-    rtk_incr_test.pl -b origin/master
+    git rebase origin/integration
+    rtk_incr_test.pl -b origin/integration
 }
 
 git_request_pull () {
     if [ $1 ]; then
         git request-pull $1 `hostname`:`pwd`
     else
-        git request-pull origin/master `hostname`:`pwd`
+        git request-pull origin/integration `hostname`:`pwd`
     fi
 }
