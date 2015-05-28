@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if ! workdir=$(workdir_root); then
+    echo $workdir
+    exit 1
+fi
+
+export SUBSYSTEM_PATH=$workdir
+export CVSWORK=$workdir/perl_lib
+
+if [ -z "$*" ]; then
+    echo No Command given, SUBSYSTEM_PATH would have been $workdir
+else
+    exec $*
+fi

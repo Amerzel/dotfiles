@@ -1,0 +1,17 @@
+#!/usr/local/bin/linear_perl -w
+
+use AppropriateLibrary;
+
+use Aliases qw/
+    RTK::Linear::Properties
+    RTK::Util::Gearman::Client
+/;
+
+
+my @gearman_servers = @{Properties->gearman_servers()};
+print "Servers: @gearman_servers\n";
+print "Prefix: ".Client->get_prefix(Properties)."\n";
+
+
+
+1;
