@@ -1,0 +1,14 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+my %counts;
+
+while (my $line = <>) {
+    chomp($line);
+    $counts{$line}++;
+}
+
+for my $key (keys %counts) {
+    print "$counts{$key}\t$key\n";
+}

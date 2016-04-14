@@ -18,7 +18,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
 Plugin 'itchyny/lightline.vim'
-Plugin 'mrtazz/simplenote.vim'
 Plugin 'tomtom/tlib_vim'
 Plugin 'Shougo/unite.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -150,6 +149,9 @@ filetype plugin indent on    " required
         %s!^\( \+\)\t!\=StrRepeat("\t", 1 + strlen(submatch(1)) / 8)!ge
         call cursor(l,c)
     endfun
+
+    " Automatically touch file handlers after saving file
+    autocmd BufWritePost * silent !bash -c 'touch_handler_cgis' &
 
 " ==============================================================================
 " Rentrak

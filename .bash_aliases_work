@@ -1,5 +1,52 @@
 #! /usr/bin/bash
 
+# Dev Servers
+alias lindev7="ssh -A lindev7"
+alias lindev8="ssh -A lindev8"
+alias lindev9="ssh -A lindev9"
+alias lindev10="ssh -A lindev10"
+alias lindev11="ssh -A lindev11"
+alias lindev12="ssh -A lindev12"
+alias lindev13="ssh -A lindev13"
+alias lindev14="ssh -A lindev14"
+alias lindev15="ssh -A lindev15"
+alias lindevprocmaster1="ssh -A lindevprocmaster1"
+
+# Staging Servers
+alias linstageweb10="ssh -A linstageweb10"
+alias linstageweb11="ssh -A linstageweb11"
+alias linstageweb12="ssh -A linstageweb12"
+alias linstageweb13="ssh -A linstageweb13"
+alias linstageweb14="ssh -A linstageweb14"
+alias linstageweb15="ssh -A linstageweb15"
+
+# Live Servers
+alias linliveworker1="ssh -A linliveworker1"
+alias linliveworker2="ssh -A linliveworker2"
+alias linliveworker3="ssh -A linliveworker3"
+alias linliveworker4="ssh -A linliveworker4"
+alias linliveweb6="ssh -A linliveweb6"
+alias linliveweb7="ssh -A linliveweb7"
+alias linliveweb8="ssh -A linliveweb8"
+alias linliveweb9="ssh -A linliveweb9"
+alias linliveweb10="ssh -A linliveweb10"
+alias linliveweb11="ssh -A linliveweb11"
+alias linlivenationalprocmaster1="ssh -A linlivenationalprocmaster1"
+
+# National Dev Database history file
+alias vnatdev="vim /home/jwhiteneck/.psql_history/lindevnationaldb2-linear_national_dev"
+
+# Background colors
+defaultbg() {
+    echo -e '\e[0;49m'
+    clear
+}
+
+redbg() {
+    echo -e '\e[0;41m'
+    clear
+}
+
 # Database Connections
 # Original code KPK
 
@@ -207,3 +254,5 @@ cdt () {
     fi
 }
 
+# Perl
+alias checkperl="perl516 -cw -MAppropriateLibrary"

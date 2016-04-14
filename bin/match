@@ -1,0 +1,16 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+my $re = shift;
+
+while (<ARGV>) {
+    if (m,$re,o) {
+        if ($+) {
+            print "$+\n";
+        } else {
+            print "$&\n";
+        }
+    }
+}
+

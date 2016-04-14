@@ -15,6 +15,7 @@
     graph = log --graph --decorate
     stat = status -s
     co = checkout
+    files = log --graph --decorate --stat --pretty=oneline
 [core]
     excludesfile = /home/jwhiteneck/.gitignore
     pager = less -r
