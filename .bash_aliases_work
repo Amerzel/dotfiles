@@ -176,6 +176,7 @@ alias out="rentask_clock.pl out"
 alias cele="rentask_clock.pl in 188159"
 alias tableau="rentask_clock.pl in 188796"
 
+alias localtests="DATABASE_XML=/c/work/LocalDatabase.xml LOCAL_TEST_DB=local_att_test python run_tests.py"
 # Gearman
 
 alias gearman_myreports="echo -E RTK_SUBSYSTEM=linear SUBSYSTEM_PATH=\$ PWD web_src/linear/services/gearman_my_reports/run \&"

@@ -9,3 +9,8 @@ spider_results.txt
 spider_results4.txt
 spider_results_webtest2.txt
 test_worker_emails.log
+.idea
+*.iml
+atlassian-ide-plugin.xml
+.vscode
+.vscode*

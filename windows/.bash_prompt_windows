@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# I don't know why but setting any kind of (colored?) PS1 seems to screw up tmux
+
+# tests
+#export PS1="\[\e[00;34m\]\u\[\e[0m\]\[\e[00;37m\]@\[\e[0m\]\[\e[00;36m\]\h\[\e[0m\]\[\e[00;37m\] \w \n\\$ \[\e[0m\]"
+#export PS1='[$LOGNAME@$HOSTNAME $PWD]\n$ '
+#export PS1='\[\e[1;34m\][\u@\h \W]\n\$\[\e[0m\] '
+
+## Colors
+#ESC_SEQ="\x1b["
+#COL_RESET=$ESC_SEQ"39;49;00m"
+#COL_RED=$ESC_SEQ"31;01m"
+#COL_GREEN=$ESC_SEQ"32;01m"
+#COL_YELLOW=$ESC_SEQ"33;01m"
+#COL_BLUE=$ESC_SEQ"34;01m"
+#COL_MAGENTA=$ESC_SEQ"35;01m"
+#COL_CYAN=$ESC_SEQ"36;01m"
+#
+## echo -e "$COL_RED This is red $COL_RESET"
+#
+#export PS1="$COL_BLUE\u@\h \w\n\$ $COL_RESET"
+
+function prompt_command() {
+    # create a $fill of all screen width minus the time string and a space:
+    let FILLSIZE=${COLUMNS}-9
+    FILL=""
+    while [ "$FILLSIZE" -gt "0" ]
+    do
+        FILL="-${FILL}" # fill with dashes to work on
+        let FILLSIZE=${FILLSIZE}-1
+    done
+
+    export PS1="$FILL \t\n\h@\u \w \n\$ "
+}
+
+PROMPT_COMMAND=prompt_command

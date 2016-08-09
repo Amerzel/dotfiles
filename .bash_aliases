@@ -33,6 +33,11 @@ alias vgdom='vim $(git diff origin/master --name-only)'
 alias vgdoi='vim $(git diff origin/integration --name-only)'
 alias vgd='vim $(git diff --name-only)'
 
+# Python aliases
+alias isvirtualenvactive='env | grep VIRTUAL_ENV | wc -l'
+alias createvirtualenv='virtualenv env && source env/Scripts/activate'
+alias setupvirtualenv='/c/work/setup_env.sh'
+
 alias        ..='cd ..'
 alias       ...='cd ../..'
 alias      ....='cd ../../..'

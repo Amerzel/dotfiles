@@ -5,7 +5,7 @@
 # set proper TERM for tmux
 # xterm-256color messes with vim's background coloring, should be screen-256color, but thats not installed on all machines
 #[ -n "$TMUX" ] && export TERM=screen-256color
-export TERM=screen-256color # Seems like screen-256color is now installed and/or working properly
+export TERM=xterm-256color # Seems like screen-256color is now installed and/or working properly
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
@@ -24,7 +24,9 @@ if [ -f ~/.bash_aliases_work ]; then
     . ~/.bash_aliases_work
 fi
 
-if [ -f ~/.bash_prompt_simple ]; then
+if [ -f ~/.bash_prompt_windows ]; then
+    . ~/.bash_prompt_windows
+elif [ -f ~/.bash_prompt_simple ]; then
     . ~/.bash_prompt_simple
 elif [ -f ~/.bash_prompt ]; then
     . ~/.bash_prompt

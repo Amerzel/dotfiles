@@ -19,17 +19,27 @@
 [core]
     excludesfile = /home/jwhiteneck/.gitignore
     pager = less -r
+	preloadindex = true
+	fscache = true
+	autocrlf = true
 [color "diff"]
     commit = blue normal bold
 [alias]
     # colored log output
     lg = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%an%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
 
+    # log pretty
+    lp = log --abbrev-commit --pretty=oneline --reverse origin..
+
     # Unstage previous commit
     undo = !git reset HEAD^
+    reset-self = !git remote update && git reset --hard origin/personal/jwhiteneck/`git rev-parse --abbrev-ref HEAD`
 [http]
     sslCAinfo = /home/jwhiteneck/.certifications/cacert.pem
+	sslverify = false
 [push]
 	default = current
 [help]
-    autocorrect = 30
+    autocorrect = 20
+[gc]
+	auto = 256
