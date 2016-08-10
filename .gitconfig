@@ -21,7 +21,8 @@
     pager = less -r
 	preloadindex = true
 	fscache = true
-	autocrlf = true
+#	autocrlf = true
+	filemode = false
 [color "diff"]
     commit = blue normal bold
 [alias]
@@ -33,6 +34,7 @@
 
     # Unstage previous commit
     undo = !git reset HEAD^
+
     reset-self = !git remote update && git reset --hard origin/personal/jwhiteneck/`git rev-parse --abbrev-ref HEAD`
 [http]
     sslCAinfo = /home/jwhiteneck/.certifications/cacert.pem

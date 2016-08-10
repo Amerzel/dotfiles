@@ -38,6 +38,9 @@ alias isvirtualenvactive='env | grep VIRTUAL_ENV | wc -l'
 alias createvirtualenv='virtualenv env && source env/Scripts/activate'
 alias setupvirtualenv='/c/work/setup_env.sh'
 
+# Front end
+alias buildall='rm -rf node_modules/ app/bower_components/ && npm install && bower install && bower update && grunt build test'
+
 alias        ..='cd ..'
 alias       ...='cd ../..'
 alias      ....='cd ../../..'

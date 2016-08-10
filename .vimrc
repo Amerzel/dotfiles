@@ -151,7 +151,7 @@ filetype plugin indent on    " required
     endfun
 
     " Automatically touch file handlers after saving file
-    autocmd BufWritePost * silent !bash -c 'touch_handler_cgis' &
+    " autocmd BufWritePost * silent !bash -c 'touch_handler_cgis' &
 
 " ==============================================================================
 " Rentrak
