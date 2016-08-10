@@ -6,7 +6,8 @@
 # xterm-256color messes with vim's background coloring, should be screen-256color, but thats not installed on all machines
 #[ -n "$TMUX" ] && export TERM=screen-256color
 #export TERM=screen-256color # Seems like screen-256color is now installed and/or working properly
-export TERM=xterm # Ubuntu testing for xfce4-terminal
+#export TERM=xterm # Ubuntu testing for xfce4-terminal
+export TERM=xterm-256color # Ubuntu testing for xfce4-terminal
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
