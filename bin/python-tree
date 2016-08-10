@@ -1,0 +1,24 @@
+import os
+import fnmatch
+
+startpath = '/path/to/directory'
+ignore = {'.DS_Store','.localized'}
+
+print startpath
+# walk the files
+for root, _, files in os.walk(startpath):
+
+    # get the current tree level
+    level = root.replace(startpath, '').count(os.sep) + 1
+    indent = ' ' * 4 * (level)
+
+    # print directory
+    if root != startpath:
+        print '{}{}/'.format(indent, os.path.basename(root))
+        subindent = ' ' * 4 * (level + 1)
+    else:
+        subindent = ' ' * 4 * (level)
+
+    # print files
+    for f in [x for x in files if x not in ignore]:
+        print '{}{}'.format(subindent, f)
