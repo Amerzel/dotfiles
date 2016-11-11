@@ -23,7 +23,13 @@ xmodmap ~/.xmodmap
 setxkbmap -option 'caps:escape'
 
 # use SSH keychain for ssh-agent persistence
-eval `keychain --eval --agents ssh id_rsa`
+eval `keychain --lockwait 30 --eval --agents ssh id_rsa`
+
+# set global npm packages directory per user
+NPM_PACKAGES="~/.npm-packages"
+PATH="$NPM_PACKAGES/bin:$PATH"
+unset MANPATH
+export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
@@ -50,3 +56,4 @@ fi;
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
 [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
+
