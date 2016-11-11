@@ -29,7 +29,14 @@ umask 002
 
 # User specific environment and startup programs
 
-PATH=$PATH:$HOME/bin
+PATH=$HOME/bin:$PATH
 
 export PATH
 unset USERNAME
+
+export PATH=.:/Users/james/local/bin:/Users/james/bin:/Users/james/work/clean/web_src/linear/scripts:/usr/local/bin:/bin:/usr/sbin:/sbin:/usr/bin:/Users/james/bin:/usr/local/mysql/bin
+
+# Marmalade SDK addition: please do not edit these lines
+export PATH=$PATH:"/Applications/Marmalade.app/Contents/s3e/bin"
+export S3E_DIR=/Applications/Marmalade.app/Contents/s3e
+# Marmalade SDK addition: end

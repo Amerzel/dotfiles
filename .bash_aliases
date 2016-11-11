@@ -1,8 +1,7 @@
 #! /usr/bin/bash
 
-alias la='ls -alh --color=tty'
-alias ls='ls -alh --color=tty'
-alias less='less -iRS'
+alias la='ls -alhG'
+alias ls='ls -alhG'
 alias ack5=acksearch
 
 alias directorysize='du -h --max-depth=1 | sort -h'
