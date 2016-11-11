@@ -151,7 +151,8 @@ function set_virtualenv () {
 function prompt_command() {
   # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
   # return value of the last command.
-  set_prompt_symbol $?
+  # set_prompt_symbol $?
+  PROMPT_SYMBOL="${PROMPT_COLOR}\$${RESET}"
 
   # Set the PYTHON_VIRTUALENV variable.
   set_virtualenv
@@ -173,16 +174,18 @@ function prompt_command() {
   done
 
   # Define the sexier-bash-prompt
-  export PS1="\[$FILL_COLOR\]$FILL \t\n\
-\[$PYTHON_VIRTUAL_ENV\]\
-\[$(get_user_color)\]\u\
-\[$PREPOSITION_COLOR\]@\
-\[$DEVICE_COLOR\]\h \
-\[$PREPOSITION_COLOR\]\
-\[$DIR_COLOR\]\w\
-\[$PREPOSITION_COLOR\]\
-\[$GIT_BRANCH\]\n\
-\[$PROMPT_SYMBOL\] "
+  PS1="";
+  PS1+="\[$FILL_COLOR\]$FILL \t\n";
+  PS1+="\[$PYTHON_VIRTUAL_ENV\]";
+  PS1+="\[$(get_user_color)\]\u";
+  PS1+="\[$PREPOSITION_COLOR\]@";
+  PS1+="\[$DEVICE_COLOR\]\h ";
+  PS1+="\[$PREPOSITION_COLOR\]";
+  PS1+="\[$DIR_COLOR\]\w";
+  PS1+="\[$PREPOSITION_COLOR\]";
+  PS1+="\[$GIT_BRANCH\]\n";
+  PS1+="\[$PROMPT_SYMBOL\] ";
+  export PS1;
 
 }
 

@@ -1,3 +1,19 @@
+[alias]
+    # colored log output
+    lg = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%an%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
+
+    # log pretty
+    lp = log --abbrev-commit --pretty=oneline --reverse origin..
+
+    # Unstage previous commit
+    undo = !git reset HEAD^
+
+    reset-self = !git remote update && git reset --hard origin/jwhiteneck/`git rev-parse --abbrev-ref HEAD`
+
+    # Show verbose output about tags, branches or remotes
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
 [user]
     name = "James Whiteneck"
     email = james.whiteneck@rentrak.com
@@ -18,30 +34,39 @@
     files = log --graph --decorate --stat --pretty=oneline
 [core]
     excludesfile = /home/jwhiteneck/.gitignore
-    pager = less -r
-	preloadindex = true
-	fscache = true
-#	autocrlf = true
-	filemode = false
+    pager = diff-highlight | diff-so-fancy | less --tabs=4 -RFX
+    preloadindex = true
+    fscache = true
+#   autocrlf = true
+    filemode = false
+[color]
+    ui = always
 [color "diff"]
+    meta = yellow bold
     commit = blue normal bold
-[alias]
-    # colored log output
-    lg = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%an%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
-
-    # log pretty
-    lp = log --abbrev-commit --pretty=oneline --reverse origin..
-
-    # Unstage previous commit
-    undo = !git reset HEAD^
-
-    reset-self = !git remote update && git reset --hard origin/personal/jwhiteneck/`git rev-parse --abbrev-ref HEAD`
+    frag = blue bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = "red bold 52"
+    newNormal = "green bold"
+    newHighlight = "green bold 22"
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "status"]
+    added = yellow
+    changed = red
+    untracked = cyan
 [http]
     sslCAinfo = /home/jwhiteneck/.certifications/cacert.pem
-	sslverify = false
+    sslverify = false
 [push]
-	default = current
+    default = current
 [help]
     autocorrect = 20
 [gc]
-	auto = 256
+    auto = 256

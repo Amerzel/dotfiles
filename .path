@@ -1,0 +1,4 @@
+export PATH="$HOME/local/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/work/clean/web_src/linear/scripts:$PATH"
+export PATH="$HOME/work/dev-tools/util_scripts:$PATH"
