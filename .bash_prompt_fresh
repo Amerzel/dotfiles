@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Shell prompt based on the Solarized Dark theme.
 # Screenshot: http://i.imgur.com/EkEtphC.png
 # Heavily inspired by @necolas’s prompt: https://github.com/necolas/dotfiles
@@ -6,8 +8,6 @@
 prompt_git() {
     local s='';
     local branchName='';
-    local git_status_color='${green}';
-    local git_stashed='';
 
     # Check if the current directory is in a Git repository.
     if [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
@@ -18,32 +18,24 @@ prompt_git() {
             # Ensure the index is up to date.
             git update-index --really-refresh -q &>/dev/null;
 
+            # Check for uncommitted changes in the index.
             if ! $(git diff --quiet --ignore-submodules --cached); then
-                # Uncommitted changes in the index.
-                echo "uncommitted\n";
-                git_status_color='${orange}';
-                s+='+';
-            elif ! $(git diff-files --quiet --ignore-submodules --); then
-                # Unstaged changes.
-                echo "unstaged\n";
-                git_status_color='${orange}';
-                s+='!';
-            elif [ -n "$(git ls-files --others --exclude-standard)" ]; then
-                # Untracked files.
-                echo "untracked\n";
-                git_status_color='${yellow}';
-                s+='?';
-            else
-                # Clean
-                echo "clean\n";
-                git_status_color='${green}';
+                s+="${yellow}+";
+            fi;
+
+            # Check for unstaged changes.
+            if ! $(git diff-files --quiet --ignore-submodules --); then
+                s+="${red}!";
+            fi;
+
+            # Check for untracked files.
+            if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+                s+="${cyan}?";
             fi;
 
             # Check for stashed files.
             if $(git rev-parse --verify refs/stash &>/dev/null); then
-                echo "stashed\n";
-                s+='$';
-                git_stashed=" ${red}(stashed)";
+                s+="${violet}$";
             fi;
 
         fi;
@@ -53,16 +45,27 @@ prompt_git() {
         # Otherwise, just give up.
         branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
             git rev-parse --short HEAD 2> /dev/null || \
-            echo 'unknown')";
+            echo '(unknown)')";
 
-        [ -n "${s}" ] && s=" [${s}]";
+        [ -n "${s}" ] && s=" ${grey}[${s}${grey}]";
 
-        echo "${s}";
-
-        echo -e "\[${git_status_color}\]${branchName}\[${git_stashed}\]";
+        echo -e "${1}${branchName}${s}";
     else
         return;
     fi;
+}
+
+prompt_fill() {
+  # create a $fill of all screen width minus the time string and a space:
+  let FILLSIZE=${COLUMNS}-9
+  FILL=""
+  while [ "$FILLSIZE" -gt "0" ]
+  do
+    FILL="-${FILL}" # fill with dashes to work on
+    let FILLSIZE=${FILLSIZE}-1
+  done
+
+    echo -e "${darkgrey}${FILL}";
 }
 
 if tput setaf 1 &> /dev/null; then
@@ -86,7 +89,6 @@ else
     bold='';
     reset="\e[0m";
     black="\e[1;30m";
-    grey="\e[1;30m";
     blue="\e[1;34m";
     cyan="\e[1;36m";
     green="\e[1;32m";
@@ -105,19 +107,22 @@ else
     userStyle="${blue}";
 fi;
 
-# Set the terminal title to the current working directory.
-PS1="\[\033]0;\w\007\]";
+# Set the terminal title and prompt.
+PS1="";
+PS1+="\[\033]0;\W\007\]"; # working directory base name
 PS1+="\n"; # newline
-PS1+="\[${darkgrey}\]\t"; # timestamp
-PS1+="\n"; # newline
+PS1+="\$(prompt_fill) \t\n"; # fill
 PS1+="\[${userStyle}\]\u"; # username
 PS1+="\[${grey}\]@";
 PS1+="\[${cyan}\]\h "; # host
-PS1+="\[${grey}\]\w "; # working directory
-PS1+="\[$(prompt_git)\]"; # Git repository details
+PS1+="\[${grey}\]\w "; # working directory full path
+PS1+="\$(prompt_git \"\[${orange}\]\" \"\[${blue}\]\")"; # Git repository details
 PS1+="\n";
 PS1+="\[${grey}\]\$ \[${reset}\]"; # `$` (and reset color)
 export PS1;
 
 PS2="\[${yellow}\]→ \[${reset}\]";
 export PS2;
+
+# temp
+PROMPT_COMMAND=
