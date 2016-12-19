@@ -33,6 +33,7 @@
     co = checkout
     files = log --graph --decorate --stat --pretty=oneline
 [core]
+    editor=vim
     excludesfile = /home/jwhiteneck/.gitignore
     pager = diff-highlight | diff-so-fancy | less --tabs=4 -RFX
     preloadindex = true
@@ -70,3 +71,5 @@
     autocorrect = 20
 [gc]
     auto = 256
+[merge]
+	conflictstyle = diff3
