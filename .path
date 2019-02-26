@@ -1,12 +1,12 @@
 #!/bin/sh
 
-export PATH=.:"$HOME/local/bin"
-export PATH=.:"$HOME/bin"
-export PATH=.:"$HOME/scripts"
-export PATH=.:"$HOME/Library/Python/3.7/bin"
-export PATH=.:/usr/local/bin
-export PATH=.:/usr/local/mysql/bin
-export PATH=.:/usr/bin
-export PATH=.:/bin
-export PATH=.:/usr/sbin
-export PATH=.:/sbin
+export PATH="$PATH:$HOME/local/bin"
+export PATH="$PATH:$HOME/bin"
+export PATH="$PATH:$HOME/scripts"
+export PATH="$PATH:$HOME/Library/Python/3.7/bin"
+export PATH="$PATH:/usr/local/bin"
+export PATH="$PATH:/usr/local/mysql/bin"
+export PATH="$PATH:/usr/bin"
+export PATH="$PATH:/bin"
+export PATH="$PATH:/usr/sbin"
+export PATH="$PATH:/sbin"

@@ -90,11 +90,6 @@ install_dotfiles () {
         file_base=${source#$DOTFILES_ROOT/}
         dest="$HOME/$file_base"
 
-# echo "file_base=$file_base"
-# echo "file_base2=$file_base2"
-# echo "source=$source"
-# echo "dest=$dest"
-
         if [ -h "$dest" ] && [ $(readlink "$dest") = $source ]; then
             continue;
         fi
