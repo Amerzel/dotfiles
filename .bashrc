@@ -1,4 +1,5 @@
-# .bashrc
+#!/bin/sh
+
 # User specific aliases and functions
 
 # Terminal
@@ -9,11 +10,12 @@ export TERM=xterm-256color
 
 # Set applicaiton new files default permissions
 umask 0002
+umask USERNAME
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{path,bash_prompt,exports,bash_aliases,bash_aliases_work,functions,extra}; do
+for file in ~/.{path,bash_prompt,bash_exports,bash_aliases,bash_aliases_work,functions,extra}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;

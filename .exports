@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Make vim the default editor
 export EDITOR=vim
 
@@ -10,26 +12,6 @@ export NODE_REPL_HISTORY=~/.node_history;
 export NODE_REPL_HISTORY_SIZE='32768';
 # Use sloppy mode by default, matching web browsers.
 export NODE_REPL_MODE='sloppy';
-
-# Increase Bash history size. Allow 32³ entries; the default is 500.
-export HISTSIZE='32768';
-export HISTFILESIZE="${HISTSIZE}";
-
-# Omit duplicates and commands that begin with a space from history.
-export HISTCONTROL='ignoreboth';
-
-# Store separate history files by machine
-if [ ! -d "${HOME}/.bash_history" ]; then
-    # If .bash_history file already exists, create .bash_history as a folder and move existing history file into it
-    if [ -r "${HOME}/.bash_history"] && [ -f "${HOME}/.bash_history" ]; then
-        mv "${HOME}/.bash_history" ".tmp_history.${HOME}/`hostname`"
-        mkdir "${HOME}/.bash_history"
-        mv ".tmp_history.${HOME}/`hostname`" "${HOME}/.bash_history/`hostname`"
-    else
-        mkdir "${HOME}/.bash_history"
-    fi
-fi
-export HISTFILE="${HOME}/.bash_history/`hostname`"
 
 # Prefer US English and use UTF-8.
 export LANG='en_US.UTF-8';

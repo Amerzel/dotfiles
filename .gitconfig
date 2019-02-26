@@ -35,7 +35,7 @@
 [core]
     editor=vim
     excludesfile = /home/jwhiteneck/.gitignore
-    pager = diff-highlight | diff-so-fancy | less --tabs=4 -RFX
+    pager = diff-so-fancy | less --tabs=4 -RFX
     preloadindex = true
     fscache = true
 #   autocrlf = true
