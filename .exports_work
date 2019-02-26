@@ -1,0 +1,10 @@
+#! /bin/sh
+
+# Local development docker exports
+export V2_PG_ADMIN_PASSWORD="adminpassword"
+export V2_PG_APP_PASSWORD="apppassword"
+export V2_PG_DB_PORT=5431
+export V2_PG_AUTO_RESTART=1
+
+# AWS Export
+export AWS_PROFILE=r-csv2dev-linear-frontend

@@ -1,5 +1,8 @@
 #1/bin/zsh
 
+# Uncomment to measure load time
+# bootTimeStart=$(gdate +%s%N)
+
 #Terminal
 export TERM=xterm-256color
 
@@ -37,12 +40,20 @@ typeset -ga sources
 sources+="$HOME/.path"
 sources+="$HOME/.aliases"
 sources+="$HOME/.exports"
+sources+="$HOME/.exports_osx"
 sources+="$HOME/.exports_work"
 sources+="$ZSH/oh-my-zsh.sh"
 sources+="$HOME/.zsh_prompt"
 
 foreach file (`echo $sources`)
   if [[ -a $file ]]; then
-    source $file;
+    # sourceIncludeTimeStart=$(gdate +%s%N)
+    source $file
+    # sourceIncludeDuration=$((($(gdate +%s%N) - $sourceIncludeTimeStart)/1000000))
+    # echo $sourceIncludeDuration ms runtime for $file
   fi
 end
+
+# Uncomment to print out load time
+# bootTimeDuration=$((($(gdate +%s%N) - $bootTimeStart)/1000000))
+# echo $bootTimeDuration ms overall boot duration
