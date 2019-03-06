@@ -22,8 +22,6 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 plugins=(
   aws
   docker
-  git
-  gitfast
   jira
   json_tools
   node
