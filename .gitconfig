@@ -16,7 +16,7 @@
 	remotes = remote -v
 [user]
     name = "James Whiteneck"
-    email = james.whiteneck@rentrak.com
+    email = jwhiteneck@comscore.com
 [diff]
     color = auto
     noprefix = true
