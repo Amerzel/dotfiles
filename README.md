@@ -1,10 +1,14 @@
-# This is my README
+# James Whiteneck's Dotfiles
 
-# Disable Github SSL Cert
-git config --global http.sslverify false
+# Setup
+```
+clone this repository into $HOME/.dotfiles
+$HOME/.dotfiles/setup.sh
+```
 
-# Vundle Setup
+## Some Commands Typically Run After Setup
+### Vundle Setup
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-# Ack
+### Ack
 curl https://beyondgrep.com/ack-2.22-single-file > ~/bin/ack && chmod 0755 ~/bin/ack
