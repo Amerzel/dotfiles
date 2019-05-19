@@ -23,7 +23,7 @@ plugins=(
   aws
   docker
   jira
-  json_tools
+  jsontools
   node
   npm
   osx
