@@ -30,6 +30,7 @@ plugins=(
   pip
   vscode
   zsh-autosuggestions
+  zsh-z
 )
 
 # Source files to load
