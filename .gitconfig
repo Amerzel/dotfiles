@@ -15,8 +15,8 @@
 	branches = branch -a
 	remotes = remote -v
 [user]
-    name = "James Whiteneck"
-    email = jwhiteneck@comscore.com
+	name = James Whiteneck
+	email = jwhiteneck@comscore.com
 [diff]
     color = auto
     noprefix = true
@@ -34,7 +34,7 @@
     files = log --graph --decorate --stat --pretty=oneline
 [core]
     editor=vim
-    excludesfile = /home/jwhiteneck/.gitignore
+	excludesfile = /Users/jwhiteneck/.gitignore_global
     pager = diff-so-fancy | less --tabs=4 -RFX
     preloadindex = true
     fscache = true
@@ -73,3 +73,11 @@
     auto = 256
 [merge]
 	conflictstyle = diff3
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/jwhiteneck/.stCommitMsg

@@ -22,6 +22,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 plugins=(
   aws
   docker
+  extract
   jira
   jsontools
   node
