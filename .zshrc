@@ -31,6 +31,7 @@ plugins=(
   pip
   vscode
   zsh-autosuggestions
+  zsh-syntax-highlighting
   zsh-z
 )
 
