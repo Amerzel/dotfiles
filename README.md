@@ -8,12 +8,16 @@ $HOME/.dotfiles/setup.sh
 
 ## Some Commands Typically Run After Setup
 ### Vundle Setup
+```
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+```
 
 ### Ack
+```
 curl https://beyondgrep.com/ack-2.22-single-file > ~/bin/ack && chmod 0755 ~/bin/ack
+```
 
-### ZSH PluginsH
+### ZSH Plugins
 ```
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
@@ -26,5 +30,7 @@ chmod g-w,o-w /Users/jw5443/.oh-my-zsh/custom/plugins/zsh-z
 ```
 
 ### Homebrew Packages
+```
 brew install diff-so-fancy
 brew cask install insomnia
+```
