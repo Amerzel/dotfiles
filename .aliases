@@ -15,21 +15,21 @@ alias gsu='git submodule update'
 alias gco='git checkout'
 alias gdom='git diff origin/master'
 alias gdomno='git diff origin/master --name-only'
-alias gdoi='git diff origin/integration'
-alias gdoino='git diff origin/integration --name-only'
+alias gdod='git diff origin/develop'
+alias gdodno='git diff origin/develop --name-only'
 alias gl='git log'
 alias glno='git log --name-only'
-alias glp='git log --pretty=oneline --abbrev-commit --reverse origin/integration..'
-alias glpno='git log --pretty=oneline --abbrev-commit --reverse origin/integration.. --name-only'
-alias glpl='git log --pretty=oneline --abbrev-commit --reverse origin/linear..'
-alias glr="git log -p --reverse origin/integration.."
-alias glrw="git log --word-diff-regex='[[:alnum:]]+|[^[:space:]]' --color-words -p -w --reverse -M origin/integration.."
+alias glp='git lp'
+alias glpno='git lp --name-only'
+alias glr="git log -p --reverse origin.."
+alias glrw="git log --word-diff-regex='[[:alnum:]]+|[^[:space:]]' --color-words -p -w --reverse -M origin/master.."
 alias gf=git_fetch
 alias grp=git_request_pull
+alias cleanup_branches="git branch --merged develop | grep -e 'james.whiteneck' | strip-ansi | xargs -n 1 git branch -d"
 
 # Vim - Git related aliases
 alias vgdom='vim $(git diff origin/master --name-only)'
-alias vgdoi='vim $(git diff origin/integration --name-only)'
+alias vgdod='vim $(git diff origin/develop --name-only)'
 alias vgd='vim $(git diff --name-only)'
 
 # Python aliases
@@ -63,14 +63,14 @@ function parse_git_branch
 git_fetch () {
     git fetch $1
     git checkout FETCH_HEAD
-    git rebase origin/integration
-    rtk_incr_test.pl -b origin/integration
+    git rebase origin/master
+    rtk_incr_test.pl -b origin/master
 }
 
 git_request_pull () {
     if [ $1 ]; then
         git request-pull $1 `hostname`:`pwd`
     else
-        git request-pull origin/integration `hostname`:`pwd`
+        git request-pull origin/master `hostname`:`pwd`
     fi
 }

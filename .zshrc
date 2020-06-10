@@ -58,3 +58,9 @@ end
 # Uncomment to print out load time
 # bootTimeDuration=$((($(gdate +%s%N) - $bootTimeStart)/1000000))
 # echo $bootTimeDuration ms overall boot duration
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="/usr/local/opt/php@7.2/bin:$PATH"
+export PATH="/usr/local/opt/php@7.2/sbin:$PATH"
+
+eval "$(jenv init -)"

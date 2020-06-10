@@ -5,6 +5,9 @@
     # log pretty
     lp = log --abbrev-commit --pretty=oneline --reverse origin..
 
+    # branch list
+    bl = branch --sort=-committerdate --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:green)%(committerdate:relative)%(color:reset) - %(authorname)'
+
     # Unstage previous commit
     undo = !git reset HEAD^
 
@@ -16,7 +19,7 @@
 	remotes = remote -v
 [user]
 	name = James Whiteneck
-	email = jwhiteneck@comscore.com
+	email = james.whiteneck@xandr.com
 [diff]
     color = auto
     noprefix = true
@@ -35,11 +38,14 @@
 [core]
     editor=vim
 	excludesfile = /Users/jwhiteneck/.gitignore_global
+    # pager = delta --theme='Monokai Extended'
     pager = diff-so-fancy | less --tabs=4 -RFX
     preloadindex = true
     fscache = true
 #   autocrlf = true
     filemode = false
+[interactive]
+    diffFilter = delta --color-only
 [color]
     ui = always
 [color "diff"]
@@ -75,7 +81,7 @@
 	conflictstyle = diff3
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
