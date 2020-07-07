@@ -14,7 +14,7 @@ unset USERNAME
 export ZSH="$HOME/.oh-my-zsh"
 
 # Theme to use
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Plugins
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -64,3 +64,9 @@ export PATH="/usr/local/opt/php@7.2/bin:$PATH"
 export PATH="/usr/local/opt/php@7.2/sbin:$PATH"
 
 eval "$(jenv init -)"
+
+# Print out a dad joke on terminal start
+curl https://icanhazdadjoke.com
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

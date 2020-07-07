@@ -37,6 +37,8 @@ alias isvirtualenvactive='env | grep VIRTUAL_ENV | wc -l'
 alias createvirtualenv='virtualenv env && source env/Scripts/activate'
 alias setupvirtualenv='/c/work/setup_env.sh'
 
+alias dadjoke="curl https://icanhazdadjoke.com"
+
 alias        ..='cd ..'
 alias       ...='cd ../..'
 alias      ....='cd ../../..'
