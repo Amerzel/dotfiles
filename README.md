@@ -7,6 +7,11 @@ $HOME/.dotfiles/setup.sh
 ```
 
 ## Some Commands Typically Run After Setup
+### NVM
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+```
+
 ### Vundle Setup
 ```
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
