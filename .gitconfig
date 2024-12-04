@@ -19,7 +19,7 @@
 	remotes = remote -v
 [user]
 	name = James Whiteneck
-	email = james.whiteneck@xandr.com
+	email = jwhiteneck@microsoft.com
 [diff]
     color = auto
     noprefix = true
@@ -85,5 +85,15 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-[commit]
-	template = /Users/jwhiteneck/.stCommitMsg
+# [commit]
+# 	template = /Users/jwhiteneck/.stCommitMsg
+[credential]
+	azreposCredentialType = oauth
+	helper =
+	helper = /usr/local/share/gcm-core/git-credential-manager
+	msauthUseBroker = true
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[credential "azrepos:org/msasg"]
+	username = jwhiteneck@microsoft.com
+	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47

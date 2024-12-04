@@ -60,11 +60,33 @@ end
 # echo $bootTimeDuration ms overall boot duration
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="/usr/local/opt/php@7.2/bin:$PATH"
-export PATH="/usr/local/opt/php@7.2/sbin:$PATH"
+# export PATH="/usr/local/opt/php@7.2/bin:$PATH"
+# export PATH="/usr/local/opt/php@7.2/sbin:$PATH"
 
 eval "$(jenv init -)"
 
-# Print out a dad joke on terminal start
-curl https://icanhazdadjoke.com
-echo "\n"
+# Automatically switch node version if .nvmrc file exists
+autoload -U add-zsh-hook
+
+load-nvmrc() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    nvm use
+  elif [[ $(nvm version) != $(nvm version default)  ]]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
+## Print out a dad joke on terminal start
+#curl https://icanhazdadjoke.com
+#echo "\n"
+
+# bun completions
+[ -s "/Users/jw5443/.bun/_bun" ] && source "/Users/jw5443/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

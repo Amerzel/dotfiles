@@ -5,3 +5,5 @@ export NVM_DIR="$HOME/.nvm"
 NVM_INSTALL_DIR=/usr/local/opt/nvm/
 source "$NVM_INSTALL_DIR/nvm.sh";
 
+# Vault
+export VAULT_ADDR="https://vault.appnexus.net:8200"
