@@ -8,9 +8,19 @@ export TERM=xterm-256color
 # xterm-256color messes with vim's background coloring, should be screen-256color, but thats not installed on all machines
 #[ -n "$TMUX" ] && export TERM=screen-256color
 
-# Set applicaiton new files default permissions
-umask 0002
-umask USERNAME
+# Load OSX specific settings
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	# Set applicaiton new files default permissions
+	umask 0002
+	umask USERNAME
+
+  # remap capslock to esc
+	xmodmap ~/.xmodmap
+	setxkbmap -option 'caps:escape'
+
+	# use SSH keychain for ssh-agent persistence
+	eval `keychain --lockwait 30 --eval --agents ssh id_rsa`
+fi
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
@@ -19,13 +29,6 @@ for file in ~/.{path,bash_prompt,bash_exports,bash_aliases,bash_aliases_work,fun
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
-
-# remap capslock to esc
-xmodmap ~/.xmodmap
-setxkbmap -option 'caps:escape'
-
-# use SSH keychain for ssh-agent persistence
-eval `keychain --lockwait 30 --eval --agents ssh id_rsa`
 
 # set global npm packages directory per user
 NPM_PACKAGES="~/.npm-packages"

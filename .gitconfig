@@ -85,13 +85,11 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-# [commit]
-# 	template = /Users/jwhiteneck/.stCommitMsg
 [credential]
+	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
 	azreposCredentialType = oauth
-	helper =
-	helper = /usr/local/share/gcm-core/git-credential-manager
 	msauthUseBroker = true
+	msauthUseDefaultAccount = true
 [credential "https://dev.azure.com"]
 	useHttpPath = true
 [credential "azrepos:org/msasg"]
